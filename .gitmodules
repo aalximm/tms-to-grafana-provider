@@ -1,0 +1,3 @@
+[submodule "tms-metric-collector"]
+	path = tms-metric-collector
+	url = https://github.com/aalximm/tms-metric-collector.git
