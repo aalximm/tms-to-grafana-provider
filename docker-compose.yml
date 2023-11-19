@@ -31,14 +31,13 @@ services:
     build: ./tms-metric-collector
     depends_on:
       - influxdb
-    ports:
-      - '5000:3000'
     environment:
       - INFLUXDB_TOKEN=${INFLUXDB_TOKEN}
       - INFLUXDB_URL=http://influxdb:8086
       - INFLUXDB_ORG=${INFLUXDB_ORG}
       - INFLUXDB_BUCKET=${INFLUXDB_BUCKET}
       - TMS_TOKEN=${TMS_TOKEN}
+      - TEST_AGREGATOR_PROJECT_CODE=${AGREGATOR_PROJECT_CODE}
 volumes:
   influxdb-storage:
   chronograf-storage:

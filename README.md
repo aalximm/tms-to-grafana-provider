@@ -30,7 +30,8 @@ Grafana will be initializating with default datasource and usefull dashboard
  - **InfluxDB**: http://localhost:8086
 
 ## Default credentials:
-
- - **Grafana**: admin / admin
+*\*you can check these values in .env file\**
+ - **Grafana**: admin / 12345678
  - **InfluxDB**: admin / 12345678
+
 
