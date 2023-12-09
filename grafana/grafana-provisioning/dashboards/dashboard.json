@@ -1,663 +1,1022 @@
 {
-	"annotations": {
-	  "list": [
-		{
-		  "builtIn": 1,
-		  "datasource": {
-			"type": "grafana",
-			"uid": "-- Grafana --"
-		  },
-		  "enable": true,
-		  "hide": true,
-		  "iconColor": "rgba(0, 211, 255, 1)",
-		  "name": "Annotations & Alerts",
-		  "type": "dashboard"
-		}
-	  ]
-	},
-	"editable": true,
-	"fiscalYearStartMonth": 0,
-	"graphTooltip": 0,
-	"links": [],
-	"liveNow": false,
-	"panels": [
-	  {
-		"datasource": {
-		  "type": "influxdb",
-		  "uid": "P951FEA4DE68E13C5"
-		},
-		"fieldConfig": {
-		  "defaults": {
-			"color": {
-			  "mode": "palette-classic",
-			  "seriesBy": "last"
-			},
-			"custom": {
-			  "axisBorderShow": false,
-			  "axisCenteredZero": false,
-			  "axisColorMode": "text",
-			  "axisLabel": "",
-			  "axisPlacement": "auto",
-			  "barAlignment": 0,
-			  "drawStyle": "line",
-			  "fillOpacity": 9,
-			  "gradientMode": "opacity",
-			  "hideFrom": {
-				"legend": false,
-				"tooltip": false,
-				"viz": false
-			  },
-			  "insertNulls": false,
-			  "lineInterpolation": "smooth",
-			  "lineStyle": {
-				"fill": "solid"
-			  },
-			  "lineWidth": 2,
-			  "pointSize": 5,
-			  "scaleDistribution": {
-				"type": "linear"
-			  },
-			  "showPoints": "auto",
-			  "spanNulls": false,
-			  "stacking": {
-				"group": "A",
-				"mode": "none"
-			  },
-			  "thresholdsStyle": {
-				"mode": "off"
-			  }
-			},
-			"mappings": [],
-			"thresholds": {
-			  "mode": "absolute",
-			  "steps": [
-				{
-				  "color": "red",
-				  "value": null
-				},
-				{
-				  "color": "green",
-				  "value": 7
-				}
-			  ]
-			},
-			"unit": "h"
-		  },
-		  "overrides": []
-		},
-		"gridPos": {
-		  "h": 8,
-		  "w": 12,
-		  "x": 0,
-		  "y": 0
-		},
-		"id": 1,
-		"options": {
-		  "legend": {
-			"calcs": [],
-			"displayMode": "list",
-			"placement": "bottom",
-			"showLegend": true
-		  },
-		  "tooltip": {
-			"mode": "single",
-			"sort": "none"
-		  }
-		},
-		"targets": [
-		  {
-			"datasource": {
-			  "type": "influxdb",
-			  "uid": "P951FEA4DE68E13C5"
-			},
-			"groupBy": [
-			  {
-				"params": [
-				  "1w"
-				],
-				"type": "time"
-			  }
-			],
-			"hide": false,
-			"measurement": "test run",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"query": "SELECT sum(\"duration\")  / 3600000 AS \"automation\" FROM \"test run\" WHERE (\"is automation run\"::field = true) AND $timeFilter GROUP BY time(1w)",
-			"rawQuery": true,
-			"refId": "Автотесты",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"duration"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [],
-				  "type": "sum"
-				},
-				{
-				  "params": [
-					" / 3600000"
-				  ],
-				  "type": "math"
-				},
-				{
-				  "params": [
-					"automation"
-				  ],
-				  "type": "alias"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "is automation run::field",
-				"operator": "=",
-				"value": "true"
-			  }
-			]
-		  },
-		  {
-			"datasource": {
-			  "type": "influxdb",
-			  "uid": "P951FEA4DE68E13C5"
-			},
-			"groupBy": [
-			  {
-				"params": [
-				  "1w"
-				],
-				"type": "time"
-			  }
-			],
-			"hide": false,
-			"measurement": "test run",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"query": "SELECT sum(\"duration\")  / 3600000 AS \"manual\" FROM \"test run\" WHERE (\"is automation run\"::field = false) AND $timeFilter GROUP BY time(1w)",
-			"rawQuery": true,
-			"refId": "Ручные тесты",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"duration"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [],
-				  "type": "sum"
-				},
-				{
-				  "params": [
-					" / 3600000"
-				  ],
-				  "type": "math"
-				},
-				{
-				  "params": [
-					"manual"
-				  ],
-				  "type": "alias"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "is automation run::field",
-				"operator": "=",
-				"value": "false"
-			  }
-			]
-		  }
-		],
-		"title": "Время прогонов по неделям",
-		"type": "timeseries"
-	  },
-	  {
-		"datasource": {
-		  "type": "influxdb",
-		  "uid": "P951FEA4DE68E13C5"
-		},
-		"fieldConfig": {
-		  "defaults": {
-			"color": {
-			  "mode": "palette-classic"
-			},
-			"custom": {
-			  "axisBorderShow": false,
-			  "axisCenteredZero": false,
-			  "axisColorMode": "text",
-			  "axisLabel": "",
-			  "axisPlacement": "auto",
-			  "barAlignment": 0,
-			  "drawStyle": "line",
-			  "fillOpacity": 0,
-			  "gradientMode": "none",
-			  "hideFrom": {
-				"legend": false,
-				"tooltip": false,
-				"viz": false
-			  },
-			  "insertNulls": false,
-			  "lineInterpolation": "smooth",
-			  "lineWidth": 1,
-			  "pointSize": 5,
-			  "scaleDistribution": {
-				"type": "linear"
-			  },
-			  "showPoints": "auto",
-			  "spanNulls": false,
-			  "stacking": {
-				"group": "A",
-				"mode": "none"
-			  },
-			  "thresholdsStyle": {
-				"mode": "off"
-			  }
-			},
-			"mappings": [],
-			"thresholds": {
-			  "mode": "absolute",
-			  "steps": [
-				{
-				  "color": "green",
-				  "value": null
-				},
-				{
-				  "color": "red",
-				  "value": 80
-				}
-			  ]
-			},
-			"unit": "m"
-		  },
-		  "overrides": [
-			{
-			  "__systemRef": "hideSeriesFrom",
-			  "matcher": {
-				"id": "byNames",
-				"options": {
-				  "mode": "exclude",
-				  "names": [
-					"test run.sum_sum"
-				  ],
-				  "prefix": "All except:",
-				  "readOnly": true
-				}
-			  },
-			  "properties": [
-				{
-				  "id": "custom.hideFrom",
-				  "value": {
-					"legend": false,
-					"tooltip": false,
-					"viz": true
-				  }
-				}
-			  ]
-			}
-		  ]
-		},
-		"gridPos": {
-		  "h": 8,
-		  "w": 12,
-		  "x": 12,
-		  "y": 0
-		},
-		"id": 4,
-		"options": {
-		  "legend": {
-			"calcs": [],
-			"displayMode": "list",
-			"placement": "bottom",
-			"showLegend": true
-		  },
-		  "tooltip": {
-			"mode": "single",
-			"sort": "none"
-		  }
-		},
-		"targets": [
-		  {
-			"alias": "",
-			"datasource": {
-			  "type": "influxdb",
-			  "uid": "P951FEA4DE68E13C5"
-			},
-			"groupBy": [
-			  {
-				"params": [
-				  "1w"
-				],
-				"type": "time"
-			  }
-			],
-			"measurement": "test run",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"query": "SELECT sum(\"duration\")  / 60000 / sum(\"steps number\") FROM \"test run\" WHERE (\"is automation run\"::field = true) AND $timeFilter GROUP BY time(1w)",
-			"rawQuery": true,
-			"refId": "A",
-			"resultFormat": "time_series",
-			"select": [
-			  [
-				{
-				  "params": [
-					"duration"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [],
-				  "type": "sum"
-				},
-				{
-				  "params": [
-					" / 3600000"
-				  ],
-				  "type": "math"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"steps number"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [],
-				  "type": "sum"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "description::field",
-				"operator": "=~",
-				"value": "/Playwright/"
-			  }
-			]
-		  },
-		  {
-			"alias": "",
-			"datasource": {
-			  "type": "influxdb",
-			  "uid": "P951FEA4DE68E13C5"
-			},
-			"groupBy": [
-			  {
-				"params": [
-				  "1w"
-				],
-				"type": "time"
-			  }
-			],
-			"hide": false,
-			"measurement": "test run",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"query": "SELECT sum(\"duration\")  / 60000 / sum(\"steps number\") FROM \"test run\" WHERE (\"is automation run\"::field = false) AND $timeFilter GROUP BY time(1w)",
-			"rawQuery": true,
-			"refId": "B",
-			"resultFormat": "time_series",
-			"select": [
-			  [
-				{
-				  "params": [
-					"duration"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [],
-				  "type": "sum"
-				},
-				{
-				  "params": [
-					" / 3600000"
-				  ],
-				  "type": "math"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"steps number"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [],
-				  "type": "sum"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "description::field",
-				"operator": "=~",
-				"value": "/Playwright/"
-			  }
-			]
-		  }
-		],
-		"title": "Среднее время прохождения одного тест-степа",
-		"type": "timeseries"
-	  },
-	  {
-		"datasource": {
-		  "type": "influxdb",
-		  "uid": "P951FEA4DE68E13C5"
-		},
-		"fieldConfig": {
-		  "defaults": {
-			"color": {
-			  "mode": "thresholds"
-			},
-			"custom": {
-			  "align": "auto",
-			  "cellOptions": {
-				"type": "auto"
-			  },
-			  "inspect": false
-			},
-			"mappings": [],
-			"thresholds": {
-			  "mode": "absolute",
-			  "steps": [
-				{
-				  "color": "green",
-				  "value": null
-				},
-				{
-				  "color": "red",
-				  "value": 80
-				}
-			  ]
-			}
-		  },
-		  "overrides": []
-		},
-		"gridPos": {
-		  "h": 8,
-		  "w": 12,
-		  "x": 0,
-		  "y": 8
-		},
-		"id": 3,
-		"options": {
-		  "cellHeight": "sm",
-		  "footer": {
-			"countRows": false,
-			"fields": "",
-			"reducer": [
-			  "sum"
-			],
-			"show": false
-		  },
-		  "frameIndex": 0,
-		  "showHeader": true
-		},
-		"pluginVersion": "10.2.0",
-		"targets": [
-		  {
-			"datasource": {
-			  "type": "influxdb",
-			  "uid": "P951FEA4DE68E13C5"
-			},
-			"groupBy": [],
-			"hide": false,
-			"measurement": "test run",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"query": "SELECT \"steps number\" AS \"steps\", \"duration\"  / 3600000 AS \"duration\" FROM \"test run\" WHERE (\"is automation run\"::field = true) AND $timeFilter",
-			"rawQuery": true,
-			"refId": "A",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"steps number"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [
-					"steps"
-				  ],
-				  "type": "alias"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"duration"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [
-					" / 3600000"
-				  ],
-				  "type": "math"
-				},
-				{
-				  "params": [
-					"duration"
-				  ],
-				  "type": "alias"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "description::field",
-				"operator": "!~",
-				"value": "/Playwright/"
-			  }
-			]
-		  },
-		  {
-			"datasource": {
-			  "type": "influxdb",
-			  "uid": "P951FEA4DE68E13C5"
-			},
-			"groupBy": [],
-			"hide": false,
-			"measurement": "test run",
-			"orderByTime": "ASC",
-			"policy": "default",
-			"query": "SELECT \"steps number\" AS \"steps\", \"duration\"  / 3600000 AS \"duration\" FROM \"test run\" WHERE (\"is automation run\"::field = false) AND $timeFilter",
-			"rawQuery": true,
-			"refId": "B",
-			"resultFormat": "table",
-			"select": [
-			  [
-				{
-				  "params": [
-					"steps number"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [
-					"steps"
-				  ],
-				  "type": "alias"
-				}
-			  ],
-			  [
-				{
-				  "params": [
-					"duration"
-				  ],
-				  "type": "field"
-				},
-				{
-				  "params": [
-					" / 3600000"
-				  ],
-				  "type": "math"
-				},
-				{
-				  "params": [
-					"duration"
-				  ],
-				  "type": "alias"
-				}
-			  ]
-			],
-			"tags": [
-			  {
-				"key": "description::field",
-				"operator": "!=",
-				"value": "/Playwright/"
-			  }
-			]
-		  }
-		],
-		"title": "Пройденные тест-степы",
-		"transformations": [
-		  {
-			"id": "reduce",
-			"options": {
-			  "includeTimeField": false,
-			  "mode": "reduceFields",
-			  "reducers": [
-				"sum"
-			  ]
-			}
-		  },
-		  {
-			"id": "merge",
-			"options": {}
-		  }
-		],
-		"type": "table"
-	  }
-	],
-	"refresh": "",
-	"schemaVersion": 38,
-	"tags": [],
-	"templating": {
-	  "list": []
-	},
-	"time": {
-	  "from": "now-90d",
-	  "to": "now"
-	},
-	"timepicker": {},
-	"timezone": "",
-	"title": "Автотесты",
-	"uid": "bf5bcaee-dbdf-4cfd-a40e-b3bc4f381892",
-	"version": 1,
-	"weekStart": ""
-  }
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 9,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 7
+              }
+            ]
+          },
+          "unit": "h"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1w"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "test run",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"duration\")  / 3600000 AS \"automation\" FROM \"test run\" WHERE (\"is automation run\"::field = true) AND $timeFilter GROUP BY time(1w)",
+          "rawQuery": true,
+          "refId": "Автотесты",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  " / 3600000"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "automation"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "is automation run::field",
+              "operator": "=",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1w"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "test run",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"duration\")  / 3600000 AS \"manual\" FROM \"test run\" WHERE (\"is automation run\"::field = false) AND $timeFilter GROUP BY time(1w)",
+          "rawQuery": true,
+          "refId": "Ручные тесты",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  " / 3600000"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "manual"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "is automation run::field",
+              "operator": "=",
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "title": "Время прогонов по неделям",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 9,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 7
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1w"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "test run",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"steps number\") AS \"automation\" FROM \"test run\" WHERE (\"is automation run\"::field = true) AND $timeFilter GROUP BY time(1w)",
+          "rawQuery": true,
+          "refId": "Автотесты",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  " / 3600000"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "automation"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "is automation run::field",
+              "operator": "=",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1w"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "test run",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"steps number\") AS \"manual\" FROM \"test run\" WHERE (\"is automation run\"::field = false) AND $timeFilter GROUP BY time(1w)",
+          "rawQuery": true,
+          "refId": "Ручные тесты",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  " / 3600000"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "manual"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "is automation run::field",
+              "operator": "=",
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "title": "Количество пройденных степов по неделям",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "m"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "test run.sum_sum"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1w"
+              ],
+              "type": "time"
+            }
+          ],
+          "measurement": "test run",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"duration\")  / 60000 / sum(\"steps number\") FROM \"test run\" WHERE (\"is automation run\"::field = true) AND $timeFilter GROUP BY time(1w)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  " / 3600000"
+                ],
+                "type": "math"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "steps number"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "description::field",
+              "operator": "=~",
+              "value": "/Playwright/"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "1w"
+              ],
+              "type": "time"
+            }
+          ],
+          "hide": false,
+          "measurement": "test run",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"duration\")  / 60000 / sum(\"steps number\") FROM \"test run\" WHERE (\"is automation run\"::field = false) AND $timeFilter GROUP BY time(1w)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  " / 3600000"
+                ],
+                "type": "math"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "steps number"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "description::field",
+              "operator": "=~",
+              "value": "/Playwright/"
+            }
+          ]
+        }
+      ],
+      "title": "Среднее время прохождения одного тест-степа",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 0,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "case status"
+          }
+        ]
+      },
+      "pluginVersion": "10.2.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "groupBy": [],
+          "hide": false,
+          "measurement": "test case",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"automation status\" as \"case status\" FROM \"test case\" WHERE $timeFilter",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "automation status"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "case id"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Статус автоматизации кейсов",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "automation status": {
+                "aggregations": [
+                  "last"
+                ],
+                "operation": "aggregate"
+              },
+              "case id": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Time": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              },
+              "automation status (last)": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "case id": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              },
+              "case status": {
+                "aggregations": [
+                  "min"
+                ],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Time (count)": "count",
+              "automation status (last)": "case status",
+              "case id (count)": "count of cases with that status"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 3,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 0,
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "groupBy": [],
+          "hide": false,
+          "measurement": "test run",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"steps number\" AS \"steps\", \"duration\"  / 3600000 AS \"duration\" FROM \"test run\" WHERE (\"is automation run\"::field = true) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "steps number"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "steps"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " / 3600000"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "description::field",
+              "operator": "!~",
+              "value": "/Playwright/"
+            }
+          ]
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P951FEA4DE68E13C5"
+          },
+          "groupBy": [],
+          "hide": false,
+          "measurement": "test run",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"steps number\" AS \"steps\", \"duration\"  / 3600000 AS \"duration\" FROM \"test run\" WHERE (\"is automation run\"::field = false) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "steps number"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "steps"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  " / 3600000"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "duration"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "description::field",
+              "operator": "!=",
+              "value": "/Playwright/"
+            }
+          ]
+        }
+      ],
+      "title": "Пройденные тест-степы",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "mode": "reduceFields",
+            "reducers": [
+              "sum"
+            ]
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-90d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Автотесты",
+  "uid": "bf5bcaee-dbdf-4cfd-a40e-b3bc4f381892",
+  "version": 1,
+  "weekStart": ""
+}
